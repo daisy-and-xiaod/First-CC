@@ -90,6 +90,10 @@ tailwind.config = {
   .dark .reaction-badge:hover{background:#3a3f3b}
   .version-selector{position:fixed;inset:0;z-index:75;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center}
   .version-selector.show{display:flex}
+.font-size-option{border:2px solid #e0e0e0;background:#fff;color:#666}
+.font-size-option.active{border-color:#006c48;background:#e8f5ee;color:#006c48}
+.dark .font-size-option{border-color:#444;background:#2a2f2b;color:#aaa}
+.dark .font-size-option.active{border-color:#6EC89B;background:#1a3a2a;color:#6EC89B}
   .search-panel{position:fixed;top:0;right:0;width:100%;max-width:400px;height:100vh;z-index:80;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.12);display:none;flex-direction:column;overflow:hidden}
   .search-panel.show{display:flex}
   .dark .search-panel{background:#1a1f1b}
@@ -208,7 +212,7 @@ tailwind.config = {
       <div class="flex-1 bg-surface-container-high rounded-2xl px-4 py-2 border border-outline-variant/20 flex items-end gap-2">
         <textarea class="flex-1 bg-transparent outline-none resize-none text-chat-bubble font-chat-bubble max-h-[120px] placeholder:text-secondary/60" rows="1" id="chat-input" placeholder="输入消息..." oninput="autoResize(this);updateSendButton()" onkeydown="handleChatKey(event)"></textarea>
       </div>
-      <button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform" id="send-btn" onclick="sendMessage()">发送</button>
+      <button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform" id="send-btn" onclick="sendMessage()"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">send</span></button>
     </div>
   </footer>
 </section>
@@ -269,7 +273,14 @@ tailwind.config = {
     <div class="mb-12"><h2 class="font-label-md text-label-md text-secondary px-4 mb-3">个性化</h2>
       <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
         <button class="w-full flex items-center justify-between border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6" onclick="showBgPicker()"><div class="flex items-center gap-4"><span class="material-symbols-outlined text-secondary">wallpaper</span><span class="font-body-lg text-body-lg">聊天背景</span></div><span class="text-secondary text-xl leading-none mr-2">›</span></button>
-        <button class="w-full flex items-center justify-between border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6" onclick="cycleFontSize()"><div class="flex items-center gap-4"><span class="material-symbols-outlined text-secondary">text_fields</span><span class="font-body-lg text-body-lg">字体大小</span></div><div class="flex items-center gap-2"><span class="text-secondary text-label-md" id="font-size-label">标准</span><span class="text-secondary text-xl leading-none mr-2">›</span></div></button>
+        <div class="border-b border-outline-variant/10 px-4 py-4">
+          <div class="flex items-center gap-4 mb-3"><span class="material-symbols-outlined text-secondary">text_fields</span><span class="font-body-lg text-body-lg">字体大小</span></div>
+          <div class="flex gap-2" id="font-size-options">
+            <button class="flex-1 py-2.5 rounded-full text-sm font-semibold transition-colors font-size-option active" data-size="standard" onclick="setFontSize('standard',this)">标准</button>
+            <button class="flex-1 py-2.5 rounded-full text-sm font-semibold transition-colors font-size-option" data-size="large" onclick="setFontSize('large',this)">大</button>
+            <button class="flex-1 py-2.5 rounded-full text-sm font-semibold transition-colors font-size-option" data-size="xlarge" onclick="setFontSize('xlarge',this)">特大</button>
+          </div>
+        </div>
         <div class="flex items-center justify-between px-4 min-h-[48px] py-6"><div class="flex items-center gap-4"><span class="material-symbols-outlined text-secondary">dark_mode</span><span class="font-body-lg text-body-lg">夜间模式</span></div><input class="ios-toggle mr-2" id="nightModeToggle" type="checkbox" onchange="toggleNightMode()"/></div>
       </div>
     </div>
@@ -1048,7 +1059,7 @@ function applySettings() {
   document.documentElement.classList.remove('font-size-large','font-size-xlarge');
   if (settings.fontSize === 'large') document.documentElement.classList.add('font-size-large');
   if (settings.fontSize === 'xlarge') document.documentElement.classList.add('font-size-xlarge');
-  const fsl = document.getElementById('font-size-label'); if (fsl) fsl.textContent = settings.fontSize === 'standard' ? '标准' : settings.fontSize === 'large' ? '大' : '特大';
+  document.querySelectorAll('.font-size-option').forEach(b => { b.classList.toggle('active', b.dataset.size === settings.fontSize); });
   const cm = document.getElementById('chat-messages'); if (cm) cm.style.backgroundColor = settings.chatBg;
 }
 
@@ -1061,10 +1072,10 @@ function saveSetting(key, value) {
 
 function toggleNightMode() { const el = document.getElementById('nightModeToggle'); if (el) { settings.nightMode = el.checked; saveSetting('nightMode', settings.nightMode); } }
 
-function cycleFontSize() {
-  const sizes = ['standard','large','xlarge']; const labels = ['标准','大','特大'];
-  const idx = sizes.indexOf(settings.fontSize); const next = (idx + 1) % 3;
-  settings.fontSize = sizes[next]; saveSetting('fontSize', settings.fontSize);
+function setFontSize(size, btn) {
+  settings.fontSize = size; saveSetting('fontSize', size);
+  document.querySelectorAll('.font-size-option').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 }
 
 function showBgPicker() { document.getElementById('bgModal').classList.remove('hidden'); }
