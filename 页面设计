@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#793032",
+                    "surface-container-highest": "#dfe4de",
+                    "background": "#f6fbf5",
+                    "surface-variant": "#dfe4de",
+                    "secondary-fixed": "#d7e3f9",
+                    "primary-fixed-dim": "#7ed8aa",
+                    "on-tertiary-fixed-variant": "#782f31",
+                    "inverse-primary": "#7ed8aa",
+                    "on-secondary-fixed-variant": "#3c4759",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#ff9b9a",
+                    "inverse-surface": "#2d322e",
+                    "on-primary-fixed-variant": "#005235",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-secondary-fixed": "#101c2c",
+                    "surface": "#f6fbf5",
+                    "surface-dim": "#d7dbd6",
+                    "on-surface": "#181d19",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#005336",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bec9c0",
+                    "secondary": "#535f71",
+                    "surface-container-low": "#f0f5ef",
+                    "tertiary-fixed": "#ffdad8",
+                    "on-secondary-container": "#576376",
+                    "on-secondary": "#ffffff",
+                    "outline": "#6f7a72",
+                    "on-tertiary-fixed": "#3e0409",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#3f4942",
+                    "on-background": "#181d19",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#9af5c5",
+                    "secondary-container": "#d4e0f6",
+                    "surface-tint": "#006c48",
+                    "surface-bright": "#f6fbf5",
+                    "inverse-on-surface": "#eef2ec",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#006c48",
+                    "primary-container": "#6ec89b",
+                    "secondary-fixed-dim": "#bbc7dd",
+                    "tertiary": "#954647",
+                    "surface-container-high": "#e5e9e4",
+                    "surface-container": "#ebefe9",
+                    "on-primary-fixed": "#002113"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.25rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "avatar-lg": "48px",
+                    "unit": "4px",
+                    "avatar-sm": "36px",
+                    "gutter-chat": "8px",
+                    "margin-page": "20px",
+                    "nav-height": "84px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "chat-bubble": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                    "chat-bubble": ["16px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "body-lg": ["17px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        body {
+            background-color: #f6fbf5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .tonal-elevation-1 {
+            background: #ffffff;
+            border: 1px solid #EDEDED;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Top AppBar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md sticky top-0 z-40 w-full h-[72px] flex justify-between items-center px-margin-page">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A warm and gentle portrait of a smiling young woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-LmnU4xo-wa8lH8QMTbsuL5IOOtnB7qrxB-lwlnYeTNqDTM48c4TO7W9vlxbxsiksn8nCOlAURbzTBMgfA2KTKBezMpbbt2BEim2HFnuywrcd2WDwUiEbszidMstXJeH79FCBZDLdB2_jLZJhHri7-Yy8NhuY6ktakGbcoDf-Hau1dSR1lly8gt9_SFlPKNRdsO3Fu5HUKneVvCDZsVozlnaZR6HnsoprSkbjKTURyuuju9awPgahsLyNK9sL9nsjC1Y7Z6YDkSM2"/>
+</div>
+<h1 class="font-headline-md text-primary">Daisy-Home</h1>
+</div>
+<button class="text-primary p-2">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<main class="px-margin-page pb-32 pt-4 space-y-6 max-w-[600px] mx-auto">
+<!-- Together Banner (Restored Hero) -->
+<section class="tonal-elevation-1 rounded-2xl p-6 bg-surface-container-low relative overflow-hidden flex items-center justify-between min-h-[120px]">
+<div class="relative z-10">
+<div class="flex items-center gap-2">
+<span class="text-lg font-medium text-secondary">在一起已</span>
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-primary text-4xl" id="days-counter">624</span>
+<span class="text-primary text-xl font-bold">天</span>
+</div>
+</div>
+<p class="text-sm text-secondary mt-1">始于 2026-06-11</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cheerful young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQNzDZDNmrLsdF5ltHW71HR8Dwy90bjOokQ8SlU8YW0h1q3zBapFwRE7bkeeeWIbFQdAfSQUaujIA_fw2ol168Qbblsp0y5RiWMmLynyvEwcYvG9SlypjI1SmeX-ne183D9XFOxMW98UL7NvDmjKVmoFeux42AM5Z8Y0yPJMk7h95Op1igEsXJOSJ4Jsco8pMAPfFsTHSxsc5ILIxCVcdafncBbr99KQQADp1zYQVh73_sJ5zuban8MAlYe7kYnTUBJVNR6U6xSMfD"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Smiling young woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSH8d-A8EfUaY9P1dHEDPs6SfvrBKoQtoPQIGXGTBV2B-Vu7kngII5w7ebAVCfujHfVkSLkWG3qM-WMyxvwGnnSvF3FSlNNlE2AuzJRNGnmQTv20SEwcg6hS7Ijr5w5ZE-cTlvT-cQxy5XnfxpZFPCPZCSFp8WFs9wLpRL38JgmEh7iOaNObXdAd80f-7h7zqXivyAFgwXzk9KYA48vlA0KYLcATbFxEwqnxr_EldH0sSeih9Di_Wn1BhWbStqWl3HHQCsB_inK1BZ"/>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/30 text-4xl">favorite</span>
+</div>
+</section>
+<!-- Quick Entry Grid (Spacious) -->
+<section class="grid grid-cols-3 gap-6">
+<button class="flex flex-col items-center gap-3 p-5 tonal-elevation-1 rounded-2xl active:scale-95 transition-transform bg-white">
+<div class="w-12 h-12 bg-primary-container/20 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined !text-[24px]">notifications_active</span>
+</div>
+<span class="text-sm font-semibold">提醒</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-5 tonal-elevation-1 rounded-2xl active:scale-95 transition-transform bg-white">
+<div class="w-12 h-12 bg-secondary-container text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined !text-[24px]">auto_stories</span>
+</div>
+<span class="text-sm font-semibold">日记</span>
+</button>
+<button class="flex flex-col items-center gap-3 p-5 tonal-elevation-1 rounded-2xl active:scale-95 transition-transform bg-white">
+<div class="w-12 h-12 bg-tertiary-container/20 text-tertiary rounded-xl flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined !text-[24px]">edit_note</span>
+</div>
+<span class="text-sm font-semibold">记录</span>
+</button>
+</section>
+<!-- Calendar (Full View) -->
+<section class="tonal-elevation-1 rounded-2xl p-6" id="calendar-section">
+<div class="flex justify-between items-center mb-6">
+<button class="flex items-center gap-1 group" id="calendar-toggle">
+<h2 class="text-xl font-bold text-on-surface">2028年3月</h2>
+<span class="material-symbols-outlined text-secondary text-base transition-transform duration-300" id="toggle-icon">expand_more</span>
+</button>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full text-secondary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-secondary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="transition-all duration-300 overflow-hidden" id="calendar-content">
+<div class="calendar-grid text-center mb-2"><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">日</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">一</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">二</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">三</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">四</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">五</div><div class="text-sm font-medium text-secondary/60 aspect-square flex items-center justify-center">六</div></div>
+<div class="calendar-grid gap-y-2 gap-x-1"><div class="text-secondary opacity-30 aspect-square flex items-center justify-center text-sm">27</div><div class="text-secondary opacity-30 aspect-square flex items-center justify-center text-sm">28</div><div class="text-secondary opacity-30 aspect-square flex items-center justify-center text-sm">29</div><div class="aspect-square flex items-center justify-center text-sm">1</div><div class="aspect-square flex items-center justify-center text-sm">2</div><div class="aspect-square flex items-center justify-center text-sm">3</div><div class="aspect-square flex items-center justify-center text-sm">4</div><div class="aspect-square flex items-center justify-center text-sm">5</div><div class="aspect-square flex items-center justify-center text-sm">6</div><div class="aspect-square flex items-center justify-center text-sm">7</div><div class="aspect-square flex items-center justify-center text-sm">8</div><div class="aspect-square flex items-center justify-center text-sm">9</div><div class="aspect-square flex items-center justify-center text-sm">10</div><div class="relative flex flex-col items-center justify-center aspect-square"><div class="absolute inset-1 bg-tertiary-container/30 rounded-full"></div><span class="z-10 font-bold text-tertiary text-sm">11</span></div><div class="aspect-square flex items-center justify-center text-sm">12</div><div class="aspect-square flex items-center justify-center text-sm">13</div><div class="relative flex flex-col items-center justify-center aspect-square"><span class="z-10 text-sm">14</span><div class="w-1.5 h-1.5 bg-primary rounded-full absolute bottom-1"></div></div><div class="relative flex flex-col items-center justify-center aspect-square"><div class="absolute inset-1.5 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">15</div></div><div class="aspect-square flex items-center justify-center text-sm">16</div><div class="aspect-square flex items-center justify-center text-sm">17</div><div class="aspect-square flex items-center justify-center text-sm">18</div></div>
+</div>
+<div class="mt-6 pt-5 border-t border-outline-variant/30 flex items-center justify-between text-xs text-secondary/80">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-tertiary rounded-full"></div><span>纪念日</span></div>
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-primary rounded-full"></div><span>经期</span></div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined !text-[14px]">event</span><span>日程</span></div>
+</div>
+</section>
+<!-- Recent Activity (Full Width Items) -->
+<section class="space-y-4">
+<h3 class="font-bold text-lg text-on-surface px-1">最新动态</h3>
+<div class="space-y-4">
+<div class="tonal-elevation-1 p-5 rounded-2xl flex gap-4 items-center transition-all active:bg-surface-container-low">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<p class="font-bold text-base truncate">小D 更新了日记</p>
+<span class="text-xs text-outline">2小时前</span>
+</div>
+<p class="text-sm text-secondary/80 truncate">"今天在公园看到一朵超漂亮的花..."</p>
+</div>
+</div>
+<div class="tonal-elevation-1 p-5 rounded-2xl flex gap-4 items-center transition-all active:bg-surface-container-low">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center flex-shrink-0 text-tertiary">
+<span class="material-symbols-outlined">celebration</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<p class="font-bold text-base truncate">周年纪念日提醒</p>
+<span class="text-xs text-outline">系统</span>
+</div>
+<p class="text-sm text-secondary/80 truncate">距离下一个纪念日还有 12 天</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-nav-height px-4 pb-safe bg-surface/95 backdrop-blur-lg border-t border-outline-variant/10">
+<button class="flex flex-col items-center justify-center text-secondary/60 px-6 py-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="text-xs font-medium">聊天</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary bg-primary-container/15 rounded-2xl px-8 py-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-xs font-bold">主页</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary/60 px-6 py-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="text-xs font-medium">设置</span>
+</button>
+</nav>
+<script>
+    // Calendar toggle logic - Default expanded in "spacious" view
+    const toggleBtn = document.getElementById('calendar-toggle');
+    const calendarContent = document.getElementById('calendar-content');
+    const toggleIcon = document.getElementById('toggle-icon');
+    let isExpanded = true;
+    calendarContent.style.maxHeight = '500px';
+    toggleIcon.style.transform = 'rotate(180deg)';
+
+    toggleBtn.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        if (isExpanded) {
+            calendarContent.style.maxHeight = '500px';
+            toggleIcon.style.transform = 'rotate(180deg)';
+        } else {
+            calendarContent.style.maxHeight = '0px';
+            toggleIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Simple counter animation
+    const counter = document.getElementById('days-counter');
+    const finalValue = 624;
+    let startValue = 600;
+    function animate() {
+        if (startValue < finalValue) {
+            startValue++;
+            counter.innerText = startValue;
+            setTimeout(animate, 20);
+        }
+    }
+    setTimeout(animate, 500);
+
+    // Nav active state
+    const navButtons = document.querySelectorAll('nav button');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            navButtons.forEach(b => {
+                b.classList.remove('text-primary', 'bg-primary-container/15', 'rounded-2xl');
+                b.classList.add('text-secondary/60');
+                const span = b.querySelector('span:last-child');
+                if(span) span.classList.remove('font-bold');
+                const icon = b.querySelector('.material-symbols-outlined');
+                if(icon) icon.style.fontVariationSettings = "'FILL' 0";
+            });
+            this.classList.add('text-primary', 'bg-primary-container/15', 'rounded-2xl');
+            this.classList.remove('text-secondary/60');
+            const span = this.querySelector('span:last-child');
+            if(span) span.classList.add('font-bold');
+            const activeIcon = this.querySelector('.material-symbols-outlined');
+            if(activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+        });
+    });
+</script>
+</body></html>
+
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>daisy-home - 聊天</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f5f5f5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #E5E9E4;
+            border-radius: 10px;
+        }
+        /* Fade in for messages */
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-message {
+            animation: messageIn 0.3s ease-out forwards;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#793032",
+                        "surface-container-highest": "#dfe4de",
+                        "background": "#f6fbf5",
+                        "surface-variant": "#dfe4de",
+                        "secondary-fixed": "#d7e3f9",
+                        "primary-fixed-dim": "#7ed8aa",
+                        "on-tertiary-fixed-variant": "#782f31",
+                        "inverse-primary": "#7ed8aa",
+                        "on-secondary-fixed-variant": "#3c4759",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#ff9b9a",
+                        "inverse-surface": "#2d322e",
+                        "on-primary-fixed-variant": "#005235",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-secondary-fixed": "#101c2c",
+                        "surface": "#f6fbf5",
+                        "surface-dim": "#d7dbd6",
+                        "on-surface": "#181d19",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#005336",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#bec9c0",
+                        "secondary": "#535f71",
+                        "surface-container-low": "#f0f5ef",
+                        "tertiary-fixed": "#ffdad8",
+                        "on-secondary-container": "#576376",
+                        "on-secondary": "#ffffff",
+                        "outline": "#6f7a72",
+                        "on-tertiary-fixed": "#3e0409",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#3f4942",
+                        "on-background": "#181d19",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#9af5c5",
+                        "secondary-container": "#d4e0f6",
+                        "surface-tint": "#006c48",
+                        "surface-bright": "#f6fbf5",
+                        "inverse-on-surface": "#eef2ec",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#006c48",
+                        "primary-container": "#6ec89b",
+                        "secondary-fixed-dim": "#bbc7dd",
+                        "tertiary": "#954647",
+                        "surface-container-high": "#e5e9e4",
+                        "surface-container": "#ebefe9",
+                        "on-primary-fixed": "#002113"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "avatar-lg": "48px",
+                        "unit": "4px",
+                        "avatar-sm": "36px",
+                        "gutter-chat": "16px",
+                        "margin-page": "16px",
+                        "nav-height": "84px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "chat-bubble": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "chat-bubble": ["16px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["17px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="bg-surface/80 backdrop-blur-md sticky top-0 z-40 w-full flex items-center justify-between px-margin-page h-nav-height border-b border-outline-variant/10">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface hover:bg-surface-container-high p-2 rounded-full transition-colors active:scale-95">
+                arrow_back
+            </button>
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Avatar" class="w-avatar-sm h-avatar-sm rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp1cnxOzZ-J7A_TFsatq8xOB_hrZijZsHvYE_epH43NAQrpjZN1NiM21tsNLXtY21jmLGHU6D79WEBewTHpO0qoAcPCYJpOYZEAOWBsTNHdCjfjzeQLpl1i29dRElqYa5wmVIdT966hyynBQCHfudaZsHuiFd_-tK7jdNO77hWuNLZxlNe1SbWX5svruvMAKJra5eR_yzJYlC--ceTju8LrdnczOwzeBirMLzp23cNVK_mfVwaLVQTyhGb7rCAy-mDyAUe5EYTK_sj"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-primary border-2 border-surface rounded-full"></span>
+</div>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-primary leading-tight">Daisy-Home</h1>
+<span class="font-label-md text-label-md text-secondary">在线</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<!-- Model Selector Dropdown -->
+<div class="relative">
+<button class="flex items-center gap-1 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/30 hover:bg-surface-container-high transition-all active:scale-95" id="modelSelect">
+<span class="font-label-md text-label-md text-on-surface-variant">GPT-4o</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-high p-2 rounded-full transition-colors">
+                search
+            </button>
+</div>
+</header>
+<!-- Chat Content Area -->
+<main class="flex-1 overflow-y-auto custom-scrollbar px-margin-page bg-[#f5f5f5] py-10">
+<div class="chat-container flex flex-col gap-gutter-chat"><!-- Date Divider -->
+<div class="flex justify-center my-8">
+<span class="bg-surface-container-highest/40 px-6 py-2 rounded-full text-[12px] font-label-md text-secondary uppercase tracking-wider">今天 14:20</span>
+</div>
+<!-- AI Message -->
+<div class="flex items-start gap-4 animate-message mb-4">
+<img alt="AI Avatar" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp1cnxOzZ-J7A_TFsatq8xOB_hrZijZsHvYE_epH43NAQrpjZN1NiM21tsNLXtY21jmLGHU6D79WEBewTHpO0qoAcPCYJpOYZEAOWBsTNHdCjfjzeQLpl1i29dRElqYa5wmVIdT966hyynBQCHfudaZsHuiFd_-tK7jdNO77hWuNLZxlNe1SbWX5svruvMAKJra5eR_yzJYlC--ceTju8LrdnczOwzeBirMLzp23cNVK_mfVwaLVQTyhGb7rCAy-mDyAUe5EYTK_sj"/>
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-primary-container text-on-primary-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm">
+<p class="font-chat-bubble text-chat-bubble">下午好！今天有什么我可以帮你的吗？我一直在等你聊天哦。🌱</p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end animate-message mb-4">
+<div class="max-w-[85%] flex flex-col gap-2">
+<div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20">
+<p class="font-chat-bubble text-chat-bubble">我想了解一下如何更好地管理我的日程安排，最近总是觉得时间不够用。</p>
+</div>
+<span class="text-[10px] text-secondary font-label-md mr-1 mt-2 text-right">已读</span>
+</div>
+</div>
+<!-- AI Message with List -->
+<div class="flex items-start gap-4 animate-message mb-4" style="animation-delay: 0.1s;">
+<img alt="AI Avatar" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8RUKJbwXhegjocSk2kdB5g2ayb-HGZggmuzj9NHGBaAcaTbXDxnhpRiU5Of_KN4apQGtiLtZqtlGTJgYH6ppEHqwo-4S4ksd2A5lQCxij51SL90wU-qjlVkrBhfe5w55lNjgLlqauVEFI2epueXgHOP_cAx8imPLwSe9MTrvzDSPG1LKhy3yzTd_5NYp-rbg1pdKUsRNJXQcdt2tOer8xjO_ri_FQpOJkyqJkqHW8jCjSLC9HmMDndQGtVrxl9Gy-IJi-GSmN_4e0"/>
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-primary-container text-on-primary-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm">
+<p class="font-chat-bubble text-chat-bubble mb-3">管理时间是个很棒的话题！这里有几个实用的技巧：</p>
+<ul class="list-disc list-inside font-chat-bubble text-chat-bubble space-y-2 opacity-90">
+<li>使用番茄钟工作法</li>
+<li>设定每日三个核心目标</li>
+<li>利用零碎时间处理琐事</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- User Message (Quote Reply) -->
+<div class="flex flex-col items-end animate-message" style="animation-delay: 0.2s;">
+<div class="max-w-[85%] flex flex-col gap-2">
+<!-- Quote Context -->
+<div class="bg-surface-container-highest/30 border-r-4 border-primary px-4 py-3 rounded-lg mb-[-12px] mr-2 text-secondary text-sm italic z-0 opacity-70">
+                        "设定每日三个核心目标"
+                    </div>
+<!-- Actual Bubble -->
+<div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 relative z-10">
+<p class="font-chat-bubble text-chat-bubble">这个建议听起来最实用，能教我怎么挑选这三个目标吗？</p>
+</div>
+</div>
+</div></div>
+</main>
+<!-- Bottom Input Area -->
+<footer class="bg-surface/80 backdrop-blur-md pb-safe border-t border-outline-variant/10 p-6">
+<div class="chat-container flex flex-col gap-4"><!-- Date Divider -->
+<div class="flex justify-center my-8">
+<span class="bg-surface-container-highest/40 px-6 py-2 rounded-full text-[12px] font-label-md text-secondary uppercase tracking-wider">今天 14:20</span>
+</div>
+<!-- AI Message -->
+<div class="flex items-start gap-4 animate-message mb-4">
+<img alt="AI Avatar" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp1cnxOzZ-J7A_TFsatq8xOB_hrZijZsHvYE_epH43NAQrpjZN1NiM21tsNLXtY21jmLGHU6D79WEBewTHpO0qoAcPCYJpOYZEAOWBsTNHdCjfjzeQLpl1i29dRElqYa5wmVIdT966hyynBQCHfudaZsHuiFd_-tK7jdNO77hWuNLZxlNe1SbWX5svruvMAKJra5eR_yzJYlC--ceTju8LrdnczOwzeBirMLzp23cNVK_mfVwaLVQTyhGb7rCAy-mDyAUe5EYTK_sj"/>
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-primary-container text-on-primary-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm">
+<p class="font-chat-bubble text-chat-bubble">下午好！今天有什么我可以帮你的吗？我一直在等你聊天哦。🌱</p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end animate-message mb-4">
+<div class="max-w-[85%] flex flex-col gap-2">
+<div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20">
+<p class="font-chat-bubble text-chat-bubble">我想了解一下如何更好地管理我的日程安排，最近总是觉得时间不够用。</p>
+</div>
+<span class="text-[10px] text-secondary font-label-md mr-1 mt-2 text-right">已读</span>
+</div>
+</div>
+<!-- AI Message with List -->
+<div class="flex items-start gap-4 animate-message mb-4" style="animation-delay: 0.1s;">
+<img alt="AI Avatar" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8RUKJbwXhegjocSk2kdB5g2ayb-HGZggmuzj9NHGBaAcaTbXDxnhpRiU5Of_KN4apQGtiLtZqtlGTJgYH6ppEHqwo-4S4ksd2A5lQCxij51SL90wU-qjlVkrBhfe5w55lNjgLlqauVEFI2epueXgHOP_cAx8imPLwSe9MTrvzDSPG1LKhy3yzTd_5NYp-rbg1pdKUsRNJXQcdt2tOer8xjO_ri_FQpOJkyqJkqHW8jCjSLC9HmMDndQGtVrxl9Gy-IJi-GSmN_4e0"/>
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-primary-container text-on-primary-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm">
+<p class="font-chat-bubble text-chat-bubble mb-3">管理时间是个很棒的话题！这里有几个实用的技巧：</p>
+<ul class="list-disc list-inside font-chat-bubble text-chat-bubble space-y-2 opacity-90">
+<li>使用番茄钟工作法</li>
+<li>设定每日三个核心目标</li>
+<li>利用零碎时间处理琐事</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- User Message (Quote Reply) -->
+<div class="flex flex-col items-end animate-message" style="animation-delay: 0.2s;">
+<div class="max-w-[85%] flex flex-col gap-2">
+<!-- Quote Context -->
+<div class="bg-surface-container-highest/30 border-r-4 border-primary px-4 py-3 rounded-lg mb-[-12px] mr-2 text-secondary text-sm italic z-0 opacity-70">
+                        "设定每日三个核心目标"
+                    </div>
+<!-- Actual Bubble -->
+<div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 relative z-10">
+<p class="font-chat-bubble text-chat-bubble">这个建议听起来最实用，能教我怎么挑选这三个目标吗？</p>
+</div>
+</div>
+</div></div>
+</footer>
+<!-- Bottom Navigation Bar -->
+<nav class="bg-surface border-t border-outline-variant/10 flex justify-around items-center py-3 px-4 pb-safe">
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-label-md">主页</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="text-[10px] font-label-md">聊天</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-label-md">设置</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions
+        const inputArea = document.querySelector('textarea');
+        const sendBtn = document.querySelector('button .material-symbols-outlined[style*="FILL"]');
+        
+        inputArea.addEventListener('input', (e) => {
+            if (e.target.value.trim() !== '') {
+                sendBtn.parentElement.style.transform = 'scale(1.05)';
+                sendBtn.parentElement.classList.add('shadow-primary/30');
+            } else {
+                sendBtn.parentElement.style.transform = 'scale(1)';
+                sendBtn.parentElement.classList.remove('shadow-primary/30');
+            }
+        });
+
+        // Simple scroll to bottom
+        const main = document.querySelector('main');
+        main.scrollTop = main.scrollHeight;
+
+        // Model selector mock behavior
+        document.getElementById('modelSelect').addEventListener('click', function() {
+            const current = this.querySelector('span:first-child');
+            current.textContent = current.textContent === 'GPT-4o' ? 'Claude 3.5' : 'GPT-4o';
+        });
+    </script>
+</body></html>
+
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar suppression for a clean look */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Subtle glass effect for headers */
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#793032",
+                        "surface-container-highest": "#dfe4de",
+                        "background": "#f6fbf5",
+                        "surface-variant": "#dfe4de",
+                        "secondary-fixed": "#d7e3f9",
+                        "primary-fixed-dim": "#7ed8aa",
+                        "on-tertiary-fixed-variant": "#782f31",
+                        "inverse-primary": "#7ed8aa",
+                        "on-secondary-fixed-variant": "#3c4759",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#ff9b9a",
+                        "inverse-surface": "#2d322e",
+                        "on-primary-fixed-variant": "#005235",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-secondary-fixed": "#101c2c",
+                        "surface": "#f6fbf5",
+                        "surface-dim": "#d7dbd6",
+                        "on-surface": "#181d19",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#005336",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#bec9c0",
+                        "secondary": "#535f71",
+                        "surface-container-low": "#f0f5ef",
+                        "tertiary-fixed": "#ffdad8",
+                        "on-secondary-container": "#576376",
+                        "on-secondary": "#ffffff",
+                        "outline": "#6f7a72",
+                        "on-tertiary-fixed": "#3e0409",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#3f4942",
+                        "on-background": "#181d19",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#9af5c5",
+                        "secondary-container": "#d4e0f6",
+                        "surface-tint": "#006c48",
+                        "surface-bright": "#f6fbf5",
+                        "inverse-on-surface": "#eef2ec",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#006c48",
+                        "primary-container": "#6ec89b",
+                        "secondary-fixed-dim": "#bbc7dd",
+                        "tertiary": "#954647",
+                        "surface-container-high": "#e5e9e4",
+                        "surface-container": "#ebefe9",
+                        "on-primary-fixed": "#002113"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "avatar-lg": "48px",
+                        "unit": "4px",
+                        "avatar-sm": "36px",
+                        "gutter-chat": "8px",
+                        "margin-page": "16px",
+                        "nav-height": "84px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "chat-bubble": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "chat-bubble": ["16px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["17px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md no-scrollbar">
+<!-- Top AppBar -->
+<header class="bg-surface/80 glass-header backdrop-blur-md sticky top-0 w-full z-40 h-nav-height flex justify-between items-center px-margin-page">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-container/20 flex items-center justify-center border border-outline-variant/30">
+<img alt="用户头像" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC85n6uq6gE103gkIYhFeycycVm3-4J-7ZyacRfPI-JRWyzRstbMXUqL_fFjUZRyG9y0OBnzdQuV4Q9fwXyPASDdEa_NV5WSfEDPNNKRQOgF1nUhQEezGsT84J90KcpQR115S1utrpAiY4qi_QgNTEmvwjUY4qZyNkT5U0uqrCUmzhkUlctJxZfu8lLLKElZtBl8kOHVRbtNSnCo_8AA1kcerq3j8ngUbZPwkIqZswnZ3iZH-cpnpecPLKqI43CGT2xX65GlC3IVkrV"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Daisy-Home</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<!-- Content Canvas -->
+<main class="max-w-[600px] mx-auto min-h-screen pb-[120px]">
+<!-- Action Area: New Conversation -->
+<section class="px-margin-page mt-6 mb-6">
+<button class="w-full h-[56px] bg-primary text-on-primary rounded-xl flex items-center justify-center gap-2 font-headline-md shadow-sm active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span>+ 新对话</span>
+</button>
+</section>
+<!-- Session List Container -->
+<div class="px-margin-page space-y-6">
+<!-- Chat Item 1 -->
+<div class="flex items-center gap-4 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer group p-4 bg-surface-container-lowest">
+<div class="w-avatar-lg h-avatar-lg rounded-full overflow-hidden flex-shrink-0 bg-secondary-container/30">
+<img alt="灵感创作助理图标" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoE2VStfhel40Y9By8p83ROaQszzk1wKoLX6jsYL-1a6lRWqF4f1fjJx7eRumCWKB0_SQKtlvJoQtuMlHVbJuhifu0WfCm-Z09AZnDtVnwMT0yNTUWaXovgwW470HCZRF8riuWiTQiWu4fK3KpVQH-mfbKMLxHatodDagaDeAnzUHaSXjxpula3LjPlTq33vtwho1o3wTW8n36uhDq_YEXXfw1VV0j9RaPTzaTL5sXUp_flL4Iej3murshQX3QZ946Gael9YuMoNpo"/>
+</div>
+<div class="flex-1 border-b border-outline-variant/20 group-last:border-none pb-4">
+<div class="flex justify-between items-center mb-1">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface">灵感创作助理</span>
+<span class="text-label-md text-secondary">刚刚</span>
+</div>
+<p class="text-body-md text-on-surface-variant truncate max-w-[240px]">我已经为您准备好了关于现代UI设计的调研报告...</p>
+</div>
+</div>
+<!-- Chat Item 2 -->
+<div class="flex items-center gap-4 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer group p-4 bg-surface-container-lowest">
+<div class="w-avatar-lg h-avatar-lg rounded-full overflow-hidden flex-shrink-0 bg-primary-container/30">
+<img alt="小D机器人图标" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADqlUItf-lLv3SRLO6Ie-XbHDBpBjYmf2aZdlnhb-oKNQKOrbKyzkVS-ORFCYgGYVpLxij511SgG897iZhsGGoBiUHhep77wPuJ3XfVWvKY01OF4zDRFN10TS5s6OPE5WsS-7HB4av6Z203X_tjudpovGXNWwuqzfsJOWy2znfLjgAkSpRwSaqhPSG6Lw8ij1H6BEjnbBJmtnV6JDyDWDFheK3ubmJLHfZhTK9sNAXRo8YNeqdYUx00avdoUDOsfufYOgCheFW5CB_"/>
+</div>
+<div class="flex-1 border-b border-outline-variant/20 group-last:border-none pb-4">
+<div class="flex justify-between items-center mb-1">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface">小D</span>
+<span class="text-label-md text-secondary">10:42</span>
+</div>
+<p class="text-body-md text-on-surface-variant truncate max-w-[240px]">欢迎回家！今天有什么我可以帮您的吗？</p>
+</div>
+</div>
+<!-- Chat Item 3 -->
+<div class="flex items-center gap-4 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer group p-4 bg-surface-container-lowest">
+<div class="w-avatar-lg h-avatar-lg rounded-full overflow-hidden flex-shrink-0 bg-secondary-container/30">
+<img alt="家庭日程助手图标" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7lCeHCkXXHU0qd72u7kZlpfnOkvJ_VR9xzCKosKusJrJ5C-2oBY9y-K7xluiJ3tcdRBptovXEM4ZGwTp5-m8Ci0nUZV_T2Ngu_SWpBxdCtdNKzUMUcJNg6-Qu8sl1oKRArqKYi9V-D5BI7hVpZFC5lwk96g7CaUw8cE6MAUlPhXji9oAx0WBdq0vVGBrX7CeVNpTmBOeAlriW17KthpGZsSXP5hbAV-mgdbWS1ZdQx61YRUweDw3P6Lrhx-yqQfJQawTBd1A_gX7b"/>
+</div>
+<div class="flex-1 border-b border-outline-variant/20 group-last:border-none pb-4">
+<div class="flex justify-between items-center mb-1">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface">家庭日程助手</span>
+<span class="text-label-md text-secondary">昨天</span>
+</div>
+<p class="text-body-md text-on-surface-variant truncate max-w-[240px]">提醒：明早 9:00 有一个关于家居装修的会议。</p>
+</div>
+</div>
+<!-- Chat Item 4 -->
+<div class="flex items-center gap-4 rounded-2xl hover:bg-surface-container-low transition-all cursor-pointer group p-4 bg-surface-container-lowest">
+<div class="w-avatar-lg h-avatar-lg rounded-full overflow-hidden flex-shrink-0 bg-tertiary-container/20">
+<img alt="技术探索小组图标" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbf62AcFINt9d22qs7wXMzdoxEF2wCw4yTkXHDSGlE4-xA0V06VAd81UBpY_pQ0prW6NR1dC0bPVUbhRMYJAFm6J6BbedMlQX1HPwCQPm5RkaTo1bYoKusEeGeSOn4sLNjpN81ggszJ3pnYNdc82lCGgXkJZe9eASi6hmL7CgoF7HiebcYfJg7OvTbYkNO7l8f1M7iWij4cnRgLixiV5aYUbPNCm8mO7gzGQWPJaU2MxvP73eL5bN3AQPrpeWH_hjm0K5JS4rzcYdK"/>
+</div>
+<div class="flex-1 border-b border-outline-variant/20 group-last:border-none pb-4">
+<div class="flex justify-between items-center mb-1">
+<span class="font-headline-md text-body-lg font-semibold text-on-surface">技术探索小组</span>
+<span class="text-label-md text-secondary">星期三</span>
+</div>
+<p class="text-body-md text-on-surface-variant truncate max-w-[240px]">分享了一个关于人工智能最新进展的链接...</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-nav-height px-4 pb-safe bg-surface/80 backdrop-blur-md border-t border-outline-variant/30">
+<!-- Chat - Active State -->
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-md text-label-md mt-1">聊天</span>
+</a>
+<!-- Home - Inactive -->
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:bg-surface-container-low transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md mt-1">主页</span>
+</a>
+<!-- Settings - Inactive -->
+<a class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:bg-surface-container-low transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md mt-1">设置</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for list items
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            item.addEventListener('mousedown', () => {
+                item.style.transform = 'scale(0.98)';
+            });
+            item.addEventListener('mouseup', () => {
+                item.style.transform = 'scale(1)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>
+
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>daisy-home - 设置</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ios-toggle {
+            appearance: none;
+            width: 51px;
+            height: 31px;
+            background: #E9E9EA;
+            border-radius: 31px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .ios-toggle:checked {
+            background: #6EC89B;
+        }
+        .ios-toggle::before {
+            content: '';
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .ios-toggle:checked::before {
+            transform: translateX(20px);
+        }
+        .backdrop-blur-md {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#793032",
+                      "surface-container-highest": "#dfe4de",
+                      "background": "#f6fbf5",
+                      "surface-variant": "#dfe4de",
+                      "secondary-fixed": "#d7e3f9",
+                      "primary-fixed-dim": "#7ed8aa",
+                      "on-tertiary-fixed-variant": "#782f31",
+                      "inverse-primary": "#7ed8aa",
+                      "on-secondary-fixed-variant": "#3c4759",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#ff9b9a",
+                      "inverse-surface": "#2d322e",
+                      "on-primary-fixed-variant": "#005235",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb3b1",
+                      "on-secondary-fixed": "#101c2c",
+                      "surface": "#f6fbf5",
+                      "surface-dim": "#d7dbd6",
+                      "on-surface": "#181d19",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#005336",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#bec9c0",
+                      "secondary": "#535f71",
+                      "surface-container-low": "#f0f5ef",
+                      "tertiary-fixed": "#ffdad8",
+                      "on-secondary-container": "#576376",
+                      "on-secondary": "#ffffff",
+                      "outline": "#6f7a72",
+                      "on-tertiary-fixed": "#3e0409",
+                      "error-container": "#ffdad6",
+                      "on-surface-variant": "#3f4942",
+                      "on-background": "#181d19",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#9af5c5",
+                      "secondary-container": "#d4e0f6",
+                      "surface-tint": "#006c48",
+                      "surface-bright": "#f6fbf5",
+                      "inverse-on-surface": "#eef2ec",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#006c48",
+                      "primary-container": "#6ec89b",
+                      "secondary-fixed-dim": "#bbc7dd",
+                      "tertiary": "#954647",
+                      "surface-container-high": "#e5e9e4",
+                      "surface-container": "#ebefe9",
+                      "on-primary-fixed": "#002113"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "avatar-lg": "48px",
+                      "unit": "4px",
+                      "avatar-sm": "36px",
+                      "gutter-chat": "8px",
+                      "margin-page": "16px",
+                      "nav-height": "84px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Be Vietnam Pro"],
+                      "chat-bubble": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                      "chat-bubble": ["16px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "body-lg": ["17px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low font-body-md text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top App Bar -->
+<header class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md sticky top-0 w-full z-40 flex justify-between items-center px-margin-page h-nav-height max-w-[600px]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkAfU1nBJLyV2HyzzUvNGzBS1cD3ZQue4U91fneFdYeK_A1mEjzrhXtOuwN-kN4Pwxk9ORS5e4SaIMyMuKMYXBtu2BcxhCwO-5LX_-wC8Z5ff6yVUQDalvXaH7DepLSdY4B6Sj1Uak8lm9ENc-yu2zfapA5N2wGuF1upG7yinavvgeGcTdYpaMTiCPJ_ddSzXaHrZNf2JmTzYSyocsbmpSNRZ22-5oAGhz00gQ1QBH1rkQ5DwqmzO0MWlMRg4Kb4GC9uxiohoOPZmm"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Daisy-Home</h1>
+</div>
+<button class="text-secondary hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<main class="w-full max-w-[600px] px-margin-page flex-grow pb-32 py-6">
+<!-- Section: 常规 -->
+<div class="mb-12">
+<h2 class="font-label-md text-label-md text-secondary px-4 mb-3">常规</h2>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<!-- Notifications -->
+<div class="flex items-center justify-between border-b border-outline-variant/10 px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">notifications</span>
+<span class="font-body-lg text-body-lg">消息通知</span>
+</div>
+<input checked="" class="ios-toggle mr-2" type="checkbox"/>
+</div>
+<!-- Solitude Reminder -->
+<div class="flex items-center justify-between px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">self_care</span>
+<span class="font-body-lg text-body-lg">独处提醒</span>
+</div>
+<input class="ios-toggle mr-2" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Section: 个性化 -->
+<div class="mb-12">
+<h2 class="font-label-md text-label-md text-secondary px-4 mb-3">个性化</h2>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<!-- Chat Background -->
+<button class="w-full flex items-center justify-between border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">wallpaper</span>
+<span class="font-body-lg text-body-lg">聊天背景</span>
+</div>
+<span class="text-secondary text-xl leading-none mr-2">›</span>
+</button>
+<!-- Font Size -->
+<button class="w-full flex items-center justify-between border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">text_fields</span>
+<span class="font-body-lg text-body-lg">字体大小</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-secondary text-label-md">标准</span>
+<span class="text-secondary text-xl leading-none mr-2">›</span>
+</div>
+</button>
+<!-- Night Mode -->
+<div class="flex items-center justify-between px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">dark_mode</span>
+<span class="font-body-lg text-body-lg">夜间模式</span>
+</div>
+<input class="ios-toggle mr-2" id="nightModeToggle" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Section: 数据与隐私 -->
+<div class="mb-12">
+<h2 class="font-label-md text-label-md text-secondary px-4 mb-3">数据与隐私</h2>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<!-- Export Chat -->
+<button class="w-full flex items-center justify-between border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">ios_share</span>
+<span class="font-body-lg text-body-lg">导出聊天</span>
+</div>
+<span class="text-secondary text-xl leading-none mr-2">›</span>
+</button>
+<!-- Clear All -->
+<button class="w-full flex items-center justify-between hover:bg-surface-container-low transition-colors active:scale-[0.98] px-4 min-h-[48px] py-6" onclick="document.getElementById('clearModal').classList.remove('hidden')">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-error">delete</span>
+<span class="font-body-lg text-body-lg text-error">清空所有</span>
+</div>
+<span class="text-error text-xl leading-none mr-2">›</span>
+</button>
+</div>
+</div>
+<!-- Section: 信息 -->
+<div class="mb-12">
+<h2 class="font-label-md text-label-md text-secondary px-4 mb-3">信息</h2>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="flex items-center justify-between px-4 min-h-[48px] py-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary">info</span>
+<span class="font-body-lg text-body-lg">关于</span>
+</div>
+<span class="text-secondary text-label-md">版本 2.4.0</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-nav-height px-4 pb-safe bg-surface/80 backdrop-blur-md border-t border-outline-variant/30 max-w-[600px] left-1/2 -translate-x-1/2 shadow-lg">
+<button class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:bg-surface-container-low transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md mt-1">聊天</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary px-4 py-1 hover:bg-surface-container-low transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md mt-1">主页</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md mt-1">设置</span>
+</button>
+</nav>
+<!-- Clear All Confirmation Modal -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-margin-page bg-black/40 backdrop-blur-sm" id="clearModal">
+<div class="bg-surface-container-lowest rounded-2xl w-full max-w-[320px] p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
+<div class="text-center">
+<div class="w-16 h-16 bg-error-container/20 rounded-full flex items-center justify-center mx-auto mb-4">
+<span class="material-symbols-outlined text-error text-4xl">warning</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">清空所有数据？</h3>
+<p class="font-body-md text-body-md text-secondary mb-6">此操作将永久删除所有聊天记录和个性化设置。操作不可撤销。</p>
+<div class="flex flex-col gap-2">
+<button class="bg-error text-on-error w-full py-3 rounded-full font-bold text-body-lg active:scale-95 transition-transform" onclick="document.getElementById('clearModal').classList.add('hidden')">
+                        是的，清空所有内容
+                    </button>
+<button class="bg-surface-container-high text-on-surface w-full py-3 rounded-full font-bold text-body-lg active:scale-95 transition-transform" onclick="document.getElementById('clearModal').classList.add('hidden')">
+                        取消
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Simple dark mode toggle simulation
+        const nightModeToggle = document.getElementById('nightModeToggle');
+        nightModeToggle.addEventListener('change', () => {
+            if (nightModeToggle.checked) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Close modal on outside click
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('clearModal');
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</body></html>
+
