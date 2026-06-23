@@ -1184,6 +1184,19 @@ function formatDate(d) { const now = new Date(); if (isSameDay(d, now)) return `
 function isSameDay(a, b) { return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
 function truncate(str, len) { if (!str) return ''; return str.length > len ? str.substring(0, len) + '...' : str; }
 function escapeHtml(str) { if (!str) return ''; return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+// PWA强制安装
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window._pwaPrompt = e;
+    const btn = document.createElement('div');
+    btn.innerHTML = '📱 安装为App';
+    btn.style.cssText =
+  'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:999;background:#006c48;color:white;padding:12px
+  24px;border-radius:32px;font-weight:bold;font-size:16px;box-shadow:0 4px 16px rgba(0,0,0,.3);cursor:pointer';
+    btn.onclick = () => { window._pwaPrompt.prompt(); btn.remove(); };
+    document.body.appendChild(btn);
+    setTimeout(() => btn.remove(), 15000);
+  });
 </script>
 </body>
 </html>
