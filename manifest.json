@@ -1,7 +1,8 @@
- {
+ {  
     "name": "Daisy-Home",
     "short_name": "Daisy",
-    "start_url": "/", 
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#f6fbf5",
     "theme_color": "#006c48"
