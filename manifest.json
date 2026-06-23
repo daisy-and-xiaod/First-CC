@@ -1,9 +1,12 @@
 {
   "name": "Daisy-Home",
   "short_name": "Daisy",
+  "description": "Daisy-Home - 情侣专属智能助手，聊天、日记、日历、提醒一站式",
   "start_url": "/",
   "scope": "/",
+  "id": "com.daisy.home",
   "display": "standalone",
+  "prefer_related_applications": false,
   "orientation": "portrait-primary",
   "background_color": "#f6fbf5",
   "theme_color": "#6EC89B",
@@ -11,10 +14,23 @@
   "categories": ["lifestyle", "social"],
   "icons": [
     {
-      "src": "/icons/icon-512x512.svg",
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icons/screenshot.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
