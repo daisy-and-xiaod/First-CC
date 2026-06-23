@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://daisy-home-api.onrender.com/api/$1" }
-  ]
+    { "source": "/api/(.*)", "destination": "https://daisyhome-api.onrender.com/api/$1" }
+  ],
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "installCommand": ""
 }

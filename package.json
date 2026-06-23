@@ -1,5 +1,5 @@
 {
-  "name": "daisy-home-api",
+  "name": "daisyhome-api",
   "version": "2.4.0",
   "description": "Daisy-Home backend - Express + Supabase + DeepSeek",
   "main": "server.js",
