@@ -199,7 +199,7 @@ tailwind.config = {
 
   <footer class="bg-surface/80 backdrop-blur-md pb-safe border-t border-outline-variant/10 p-4">
     <div class="max-w-[600px] mx-auto flex items-end gap-3">
-      <button class="text-secondary hover:text-primary p-2 flex-shrink-0" onclick="toggleEmojiPicker()"><span class="material-symbols-outlined">mood</span></button>
+      <button class="text-secondary hover:text-primary p-2 flex-shrink-0" style="display:none"><span class="material-symbols-outlined">mood</span></button>
       <!-- Image Upload Button -->
       <button class="text-secondary hover:text-primary p-2 flex-shrink-0 image-upload-btn" title="上传图片">
         <span class="material-symbols-outlined">image</span>
@@ -208,7 +208,7 @@ tailwind.config = {
       <div class="flex-1 bg-surface-container-high rounded-2xl px-4 py-2 border border-outline-variant/20 flex items-end gap-2">
         <textarea class="flex-1 bg-transparent outline-none resize-none text-chat-bubble font-chat-bubble max-h-[120px] placeholder:text-secondary/60" rows="1" id="chat-input" placeholder="输入消息..." oninput="autoResize(this);updateSendButton()" onkeydown="handleChatKey(event)"></textarea>
       </div>
-      <button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform" id="send-btn" onclick="sendMessage()"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">send</span></button>
+      <button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform" id="send-btn" onclick="sendMessage()">发送</button>
     </div>
   </footer>
 </section>
