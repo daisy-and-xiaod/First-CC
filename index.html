@@ -7,7 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="theme-color" content="#006c48"/>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#6EC89B">
+  <link rel="manifest" href="/manifest.json">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script>
@@ -403,7 +407,7 @@ tailwind.config = {
 <!-- ═══════════════════════════════════════════════════════════ SCRIPTS ═════════ -->
 <script>
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:3000/api' : 'https://daisyhome-api.onrender.com/api';
+  ?  'http://localhost:3000/api' : 'https://daisyhome-api.onrender.com/api';
 const TOGETHER_START = new Date('2026-06-11');
 
 let currentPage = 'home';
@@ -460,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Register service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+     navigator.serviceWorker.register('/sw.js').then(r => console.log('SW注册成功', r.scope)).catch(e => console.error('SW注册失败', e.message));
   }
   // PWA install prompt
   let deferredPrompt;
@@ -1184,6 +1188,19 @@ function formatDate(d) { const now = new Date(); if (isSameDay(d, now)) return `
 function isSameDay(a, b) { return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
 function truncate(str, len) { if (!str) return ''; return str.length > len ? str.substring(0, len) + '...' : str; }
 function escapeHtml(str) { if (!str) return ''; return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+// PWA强制安装
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window._pwaPrompt = e;
+    const btn = document.createElement('div');
+    btn.innerHTML = '📱 安装为App';
+    btn.style.cssText =
+  'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:999;background:#006c48;color:white;padding:12px
+  24px;border-radius:32px;font-weight:bold;font-size:16px;box-shadow:0 4px 16px rgba(0,0,0,.3);cursor:pointer';
+    btn.onclick = () => { window._pwaPrompt.prompt(); btn.remove(); };
+    document.body.appendChild(btn);
+    setTimeout(() => btn.remove(), 15000);
+  });
 </script>
 </body>
 </html>
