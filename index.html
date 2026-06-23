@@ -203,7 +203,7 @@ tailwind.config = {
 
   <footer class="bg-surface/80 backdrop-blur-md pb-safe border-t border-outline-variant/10 p-4">
     <div class="max-w-[600px] mx-auto flex items-end gap-3">
-      <button class="text-secondary hover:text-primary p-2 flex-shrink-0" style="display:none"><span class="material-symbols-outlined">mood</span></button>
+      <button class="text-secondary hover:text-primary p-2 flex-shrink-0" onclick="toggleEmojiPicker()"><span class="material-symbols-outlined">mood</span></button>
       <!-- Image Upload Button -->
       <button class="text-secondary hover:text-primary p-2 flex-shrink-0 image-upload-btn" title="上传图片">
         <span class="material-symbols-outlined">image</span>
@@ -639,7 +639,7 @@ async function loadMessages() {
           <img alt="User" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0 cursor-pointer" src="${userAvatarUrl}" onclick="triggerAvatarUpload('user')" title="点击更换头像"/>
           <div class="max-w-[85%] flex flex-col gap-2 items-end">
             ${m.image_url ? `<img src="${m.image_url}" class="rounded-xl max-w-full max-h-[200px] object-cover mb-1" loading="lazy"/>` : ''}
-            <div class="bg-white text-on-surface px-3.5 py-2.5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 msg-bubble" oncontextmenu="return false" onmousedown="startLongPress(event,'${m.id}','user')" ontouchstart="startLongPress(event,'${m.id}','user')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">
+            <div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 msg-bubble" oncontextmenu="return false" onmousedown="startLongPress(event,'${m.id}','user')" ontouchstart="startLongPress(event,'${m.id}','user')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">
               <p class="font-chat-bubble text-chat-bubble">${m.content}</p>
             </div>${reactionsHtml}
             <span class="text-[10px] text-secondary font-label-md mr-1">${m.read ? '已读' : '未读'}</span>
@@ -648,15 +648,10 @@ async function loadMessages() {
         html += `<div class="flex items-start gap-4 animate-message mb-4" data-msg-id="${m.id}" data-role="assistant" data-content="${contentAttr}">
           <img alt="AI" class="w-avatar-sm h-avatar-sm rounded-full flex-shrink-0 cursor-pointer" src="${aiAvatarUrl}" onclick="triggerAvatarUpload('ai')" title="点击更换AI头像"/>
           <div class="flex flex-col gap-2 max-w-[85%]">
-            <div class="bg-primary-container text-on-primary-container px-3.5 py-2.5 rounded-2xl rounded-tl-[4px] shadow-sm msg-bubble relative" oncontextmenu="return false" onmousedown="startLongPress(event,'${m.id}','assistant')" ontouchstart="startLongPress(event,'${m.id}','assistant')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">
+            <div class="bg-primary-container text-on-primary-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm msg-bubble" oncontextmenu="return false" onmousedown="startLongPress(event,'${m.id}','assistant')" ontouchstart="startLongPress(event,'${m.id}','assistant')" ontouchend="cancelLongPress()" ontouchmove="cancelLongPress()">
               <p class="font-chat-bubble text-chat-bubble">${m.content}</p>
-              <div class="flex items-center justify-end gap-1 mt-1.5 pt-1.5 border-t border-on-primary-container/10">
-                <button class="text-[10px] text-on-primary-container/60 hover:text-on-primary-container px-1" onclick="event.stopPropagation();regenerateMessage('${m.id}')" title="重新生成"><span class="material-symbols-outlined !text-[14px]">refresh</span></button>
-                <span class="text-[10px] text-on-primary-container/40">|</span>
-                <button class="text-[10px] text-on-primary-container/60 hover:text-on-primary-container px-1" onclick="event.stopPropagation();showVersionSelector('${m.id}')" title="切换版本"><span class="material-symbols-outlined !text-[14px]">swap_horiz</span></button>
-                ${m.version > 1 ? `<span class="text-[10px] text-on-primary-container/40">v${m.version}</span>` : ''}
-              </div>
             </div>${reactionsHtml}
+            ${m.version > 1 ? `<span class="text-[10px] text-secondary ml-1">版本 ${m.version}</span>` : ''}
           </div></div>`;
       }
       return html;
@@ -673,7 +668,7 @@ async function sendMessage() {
   input.value = ''; input.style.height = 'auto'; updateSendButton();
   const container = document.getElementById('messages-container');
   const quoteHtml = quotedMessage ? `<div class="bg-surface-container-highest/30 border-r-4 border-primary px-4 py-3 rounded-lg mb-[-12px] mr-2 text-secondary text-sm italic z-0 opacity-70">"${truncate(quotedMessage.content, 60)}"</div>` : '';
-  container.innerHTML += `<div class="flex flex-col items-end animate-message mb-4"><div class="max-w-[85%] flex flex-col gap-2">${quoteHtml}<div class="bg-white text-on-surface px-3.5 py-2.5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 relative z-10"><p class="font-chat-bubble text-chat-bubble">${content}</p></div></div></div>`;
+  container.innerHTML += `<div class="flex flex-col items-end animate-message mb-4"><div class="max-w-[85%] flex flex-col gap-2">${quoteHtml}<div class="bg-white text-on-surface p-5 rounded-2xl rounded-tr-[4px] shadow-sm border border-outline-variant/20 relative z-10"><p class="font-chat-bubble text-chat-bubble">${content}</p></div></div></div>`;
   cancelQuote(); scrollToBottom();
   try {
     await api('/chat', { method: 'POST', body: { sessionId: currentSessionId, message: content, model: currentModel } });
@@ -682,7 +677,7 @@ async function sendMessage() {
       document.getElementById('chat-title').textContent = content.substring(0, 20) + (content.length > 20 ? '...' : '');
     }
   } catch (err) {
-    container.innerHTML += `<div class="flex items-start gap-4 animate-message mb-4"><div class="flex flex-col gap-2 max-w-[85%]"><div class="bg-error-container text-on-error-container px-3.5 py-2.5 rounded-2xl rounded-tl-[4px] shadow-sm"><p class="font-chat-bubble text-chat-bubble">发送失败: ${escapeHtml(err.message)}</p></div></div></div>`;
+    container.innerHTML += `<div class="flex items-start gap-4 animate-message mb-4"><div class="flex flex-col gap-2 max-w-[85%]"><div class="bg-error-container text-on-error-container p-5 rounded-2xl rounded-tl-[4px] shadow-sm"><p class="font-chat-bubble text-chat-bubble">发送失败: ${escapeHtml(err.message)}</p></div></div></div>`;
     scrollToBottom();
   }
 }
